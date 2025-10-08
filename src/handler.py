@@ -59,7 +59,7 @@ def get_pipeline():
     )
     pipe.set_ip_adapter_scale([1.0,  1.0])
 
-    return pipe, pipe_img2img
+    return pipe
 
 PIPELINE_TEXT2IMG = get_pipeline()
 
