@@ -49,14 +49,6 @@ def get_pipeline():
     ).to(DEVICE)
     pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)
 
-    pipe_img2img = StableDiffusionImg2ImgPipeline.from_pretrained(
-        BASE_MODEL_PATH,
-        torch_dtype=DTYPE,
-        use_safetensors=True,
-        local_files_only=True
-    ).to(DEVICE)
-    pipe_img2img.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe_img2img.scheduler.config)
-
     pipe.load_ip_adapter(
         IPADAPTER_FOLDER,
         subfolder=IPADAPTER_SUBFOLDER,
@@ -69,7 +61,7 @@ def get_pipeline():
 
     return pipe, pipe_img2img
 
-PIPELINE_TEXT2IMG, PIPELINE_IMG2IMG = get_pipeline()
+PIPELINE_TEXT2IMG = get_pipeline()
 
 def generate_image(job_id,
                    prompt=None, 
@@ -94,7 +86,7 @@ def generate_image(job_id,
     face_crop, style_image = face_detection(face_image_cv2, style_image_cv2)
 
     if prompt == None:
-        prompt = "a portrait of a man, looking directly at the camera, symmetrical face"
+        prompt = "a portrait of a person, looking directly at the camera, symmetrical face"
     
     if negative_prompt == None:
         negative_prompt = "(deformed, blurry, long neck, bad collar, cgi, bad anatomy, big body)"
@@ -118,16 +110,8 @@ def generate_image(job_id,
     ).images
 
     upscaled_image = images[0].resize((1024, 1024), Image.LANCZOS)
-    refined = PIPELINE_IMG2IMG(
-        prompt=prompt,
-        negative_prompt=negative_prompt,
-        image=upscaled_image,
-        guidance_scale=1.0,
-        strength=0.1,
-        num_inference_steps=40,
-    ).images
 
-    return refined
+    return upscaled_image
 
 def handler(job):
     try:
@@ -153,7 +137,7 @@ def handler(job):
             width
         )
 
-        result_image = images[0]
+        result_image = upscaled_image
         output_buffer = BytesIO()
         result_image.save(output_buffer, format='PNG')
         image_data = output_buffer.getvalue()
