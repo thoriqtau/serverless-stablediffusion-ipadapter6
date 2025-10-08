@@ -37,10 +37,10 @@ RUN apt update && \
 # Set the working directory
 WORKDIR /workspace
 
-RUN git clone https://github.com/thoriqtau/serverless-stablediffusion-ipadapter.git
+RUN git clone https://github.com/thoriqtau/serverless-stablediffusion-ipadapterr.git
 
 # Install the worker dependencies
-WORKDIR /workspace/serverless-stablediffusion-ipadapter/src
+WORKDIR /workspace/serverless-stablediffusion-ipadapterr/src
 RUN pip3 install --no-cache-dir torch==2.6.0+cu124 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 && \
     pip3 install --no-cache-dir runpod && \
     pip3 install -r requirements.txt
@@ -49,7 +49,7 @@ RUN pip3 install --no-cache-dir torch==2.6.0+cu124 torchvision torchaudio --inde
 RUN python3 download_checkpoints.py
 
 # Download insightface checkpoints
-RUN cd /workspace/serverless-stablediffusion-ipadapter/src && \
+RUN cd /workspace/serverless-stablediffusion-ipadapterr/src && \
     mkdir -p insightface_models/models && \
     cd insightface_models/models && \
     wget https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_l.zip && \
