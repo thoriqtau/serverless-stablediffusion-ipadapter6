@@ -137,7 +137,7 @@ def handler(job):
             width
         )
 
-        result_image = upscaled_image
+        result_image = images
         output_buffer = BytesIO()
         result_image.save(output_buffer, format='PNG')
         image_data = output_buffer.getvalue()
