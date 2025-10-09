@@ -40,7 +40,7 @@ WORKDIR /workspace
 RUN git clone https://github.com/thoriqtau/serverless-stablediffusion-ipadapter3.git
 
 # Install the worker dependencies
-WORKDIR /workspace/serverless-stablediffusion-ipadapter3src
+WORKDIR /workspace/serverless-stablediffusion-ipadapter3/src
 RUN pip3 install --no-cache-dir torch==2.6.0+cu124 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 && \
     pip3 install --no-cache-dir runpod && \
     pip3 install -r requirements.txt
