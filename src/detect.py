@@ -1,5 +1,5 @@
 from insightface.app import FaceAnalysis
-from utils import crop_face, convert_from_cv2_to_image
+from utils import crop_face
 
 INSIGHTFACE_MODEL_NAME = "buffalo_l"
 INSIGHTFACE_MODEL = './insightface_models/models'
@@ -24,8 +24,5 @@ def face_detection(face_image, style_image):
     raise Exception("Multiple faces detected in the style image! Please upload a style image with only one face.")
   
   face_crop = crop_face(face_image, face_info[0])
-
-  face_crop = convert_from_cv2_to_image(face_crop)
-  style_image = convert_from_cv2_to_image(style_image)
 
   return face_crop, style_image
