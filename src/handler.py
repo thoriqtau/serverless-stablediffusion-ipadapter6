@@ -14,7 +14,8 @@ from diffusers import (EulerAncestralDiscreteScheduler,
 from transformers import CLIPVisionModelWithProjection
 
 from detect import face_detection
-from utils import load_image, convert_from_image_to_cv2
+from utils import load_image, convert_from_image_to_cv2, convert_from_cv2_to_image
+from restoration import inference_app
 
 # Global variables
 IMAGE_ENCODER_PATH = "./CLIP-ViT-H-14-laion2B-s32B-b79K"
@@ -57,7 +58,7 @@ def get_pipeline():
             IPADAPTER_FACE,
         ]
     )
-    pipe.set_ip_adapter_scale([1.0,  1.0])
+    pipe.set_ip_adapter_scale([1.0,  0.7])
 
     return pipe
 
@@ -85,6 +86,16 @@ def generate_image(job_id,
 
     face_crop, style_image = face_detection(face_image_cv2, style_image_cv2)
 
+    output = inference_app(
+        image=face_image,
+        background_enhance=True,
+        face_upsample=False,
+        upscale=1,
+        codeformer_fidelity=0.99,
+    )
+    face_image = convert_from_cv2_to_image(output)
+    style_image = convert_from_cv2_to_image(style_image)
+
     if prompt == None:
         prompt = "a portrait of a person, looking directly at the camera, symmetrical face"
     
@@ -100,7 +111,7 @@ def generate_image(job_id,
     images = PIPELINE_TEXT2IMG(
         prompt=prompt,
         negative_prompt=negative_prompt,
-        ip_adapter_image=[style_image, face_crop],
+        ip_adapter_image=[style_image, face_image],
         num_inference_steps=num_inference_steps,
         guidance_scale=guidance_scale,
         height=height,
