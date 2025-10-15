@@ -1,3 +1,5 @@
+codeformer-pip
+onnxruntime-gpu
 diffusers==0.35.1
 insightface==0.7.3
 pillow==11.3.0
@@ -10,4 +12,3 @@ opencv-python
 onnxruntime-gpu
 omegaconf
 peft
-
