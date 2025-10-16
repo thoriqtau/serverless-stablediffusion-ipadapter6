@@ -9,8 +9,7 @@ from PIL import Image
 from runpod.serverless.modules.rp_logger import RunPodLogger
 
 from diffusers import (EulerAncestralDiscreteScheduler,
-                       StableDiffusionPipeline,
-                       StableDiffusionImg2ImgPipeline)
+                       StableDiffusionPipeline)
 from transformers import CLIPVisionModelWithProjection
 
 from detect import face_detection
