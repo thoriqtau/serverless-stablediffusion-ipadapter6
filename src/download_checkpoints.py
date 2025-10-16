@@ -12,9 +12,6 @@ def fetch_models():
 
     snapshot_download("laion/CLIP-ViT-H-14-laion2B-s32B-b79K", 
                       local_dir="./CLIP-ViT-H-14-laion2B-s32B-b79K")
-
-    snapshot_download("thoriqtau/codeformer", 
-                      local_dir="./")
     
 if __name__ == '__main__':
     fetch_models()
