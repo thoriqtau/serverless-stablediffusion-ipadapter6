@@ -12,6 +12,31 @@ from codeformer.basicsr.utils.registry import ARCH_REGISTRY
 from codeformer.facelib.utils.face_restoration_helper import FaceRestoreHelper
 from codeformer.facelib.utils.misc import is_gray
 
+pretrain_model_url = {
+    "codeformer": "https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/codeformer.pth",
+    "detection": "https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/detection_Resnet50_Final.pth",
+    "parsing": "https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/parsing_parsenet.pth",
+    "realesrgan": "https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/RealESRGAN_x2plus.pth",
+}
+
+# download weights
+if not os.path.exists("CodeFormer/weights/CodeFormer/codeformer.pth"):
+    load_file_from_url(
+        url=pretrain_model_url["codeformer"], model_dir="CodeFormer/weights/CodeFormer", progress=True, file_name=None
+    )
+if not os.path.exists("CodeFormer/weights/facelib/detection_Resnet50_Final.pth"):
+    load_file_from_url(
+        url=pretrain_model_url["detection"], model_dir="CodeFormer/weights/facelib", progress=True, file_name=None
+    )
+if not os.path.exists("CodeFormer/weights/facelib/parsing_parsenet.pth"):
+    load_file_from_url(
+        url=pretrain_model_url["parsing"], model_dir="CodeFormer/weights/facelib", progress=True, file_name=None
+    )
+if not os.path.exists("CodeFormer/weights/realesrgan/RealESRGAN_x2plus.pth"):
+    load_file_from_url(
+        url=pretrain_model_url["realesrgan"], model_dir="CodeFormer/weights/realesrgan", progress=True, file_name=None
+    )
+
 def imread(img_path):
     img = cv2.imread(img_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
