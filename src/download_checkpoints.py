@@ -10,7 +10,7 @@ def fetch_models():
     snapshot_download("thoriqtau/ipadapter", 
                       local_dir="./ipadapter")
 
-    snapshot_download("laion/CLIP-ViT-H-14-laion2B-s32B-b79K", 
+    snapshot_download("thoriqtau/CLIP-ViT-H-14-laion2B-s32B-b79K", 
                       local_dir="./CLIP-ViT-H-14-laion2B-s32B-b79K")
     
 if __name__ == '__main__':
