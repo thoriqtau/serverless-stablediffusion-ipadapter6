@@ -44,6 +44,7 @@ def get_pipeline():
         BASE_MODEL_PATH,
         torch_dtype=DTYPE,
         image_encoder=image_encoder,
+        safety_checker=None,
         use_safetensors=True,
         local_files_only=True
     ).to(DEVICE)
@@ -57,7 +58,7 @@ def get_pipeline():
             IPADAPTER_FACE,
         ]
     )
-    pipe.set_ip_adapter_scale([1.0,  0.7])
+    pipe.set_ip_adapter_scale([1.0,  0.9])
 
     return pipe
 
